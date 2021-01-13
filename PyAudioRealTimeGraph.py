@@ -40,7 +40,8 @@ ax.set_xlim(0,CHUNK)
 while True:
     data = stream.read(CHUNK)
     #data_int = np.array(struct.unpack(str(2*CHUNK)+'B', data), dtype='b')[::2] + 127
-    data_int = np.fromstring(stream.read(CHUNK),dtype=np.int16)
+    #data_int = np.fromstring(stream.read(CHUNK),dtype=np.int16)
+    data_int = np.frombuffer(stream.read(CHUNK),np.int16,-1)
     line.set_ydata(data_int)
     fig.canvas.draw()
     fig.canvas.flush_events()

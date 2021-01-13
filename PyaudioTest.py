@@ -37,7 +37,8 @@ for i in range(0, 1): # lets just read 1 chunk at a time
     #print(data)
     print("data[0]:{} data[1]:{}".format(data[0],data[1]))
     #data_int = np.array(struct.unpack(str(2*chunk)+'B', data), dtype='b')[::2] + 127
-    npData = np.fromstring(stream.read(chunk),dtype=np.int16)
+    #npData = np.fromstring(stream.read(chunk),dtype=np.int16)
+    npData = np.frombuffer(stream.read(chunk),np.int16,-1)
     print(npData)
     #frames.append(data)
 
