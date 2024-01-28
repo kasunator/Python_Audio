@@ -29,7 +29,7 @@ fvec = (-Nfft/2:Nfft/2-1)*Fs/Nfft;
 #but we want the negative first and postive later for that we use the fftshift()
 #fucntion
 xreal_f_dom = fft(xreal, Nfft);
-
+xreal_f_dom = fftshift(xreal_f_dom);
 figure
 #because the output of the fft is complex we have to take avs()
 plot(fvec,abs(xreal_f_dom));
