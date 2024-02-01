@@ -37,23 +37,45 @@ Xk = zeros(1,N);
 
 for  k =0: N-1
     for n =0: N-1
-        fprintf("n :  %d, xn( %d) = %e  + j %e \n", n, n+1, real(xn(n+1)), imag(xn(n+1)) );
-        addition = xn(n+1)*exp(-j*2*pi*k*n);
-        fprintf( " for k = %d, n = %d, addition : ,= %e + j %e \n", k, n, real(addition), imag(addition) );
+        #fprintf("n :  %d, xn( %d) = %e  + j %e \n", n, n+1, real(xn(n+1)), imag(xn(n+1)) );
+        addition = xn(n+1)*exp(-j*2*pi*k*n/N);
+        #fprintf( " for k = %d, n = %d, addition : ,= %e + j %e \n", k, n, real(addition), imag(addition) );
         Xk(k+1) = Xk(k+1) + addition;
     endfor
-    fprintf(" K ; %d, Xk(%d) = %e + j%e \n" , k, k+1 , real(Xk(k+1)) , imag(Xk(k+1)) );
+    #fprintf(" K ; %d, Xk(%d) = %e + j%e \n" , k, k+1 , real(Xk(k+1)) , imag(Xk(k+1)) );
 end
 
-fvec = (0:N/2-1)*Fs/N;
+#fvec = (0:N/2-1)*Fs/N;
 
+fvec = (-N/2:N/2-1)*Fs/N;
 
-
+fvecPos = fvec(N/2+1:N)
+f_dom_pos = Xk(1:N/2)
 figure
-#because the output of the fft is complex we have to take avs()
-#plot(fvec,Xk);
-plot(abs(Xk));
-#xticks(fvec)
+plot(fvecPos,abs(f_dom_pos));
+xticks(fvec)
 xlabel('Frequency in [Hz] ');
-ylabel(' DFT')
+ylabel('FFT with No shift, BUT postive only ')
 grid on
+
+
+
+f_dom_neg =  Xk(N/2+1:N)
+f_dom_result_shifted = [f_dom_neg  f_dom_pos];
+figure
+plot(fvec,abs(f_dom_result_shifted));
+xticks(fvec)
+xlabel('Frequency in [Hz] ');
+ylabel('FFT with with shift,')
+grid on
+
+
+
+#this was used just to plot the DFt result during
+#development and Dbug
+#figure
+#because the output of the fft is complex we have to take avs()
+#plot(abs(Xk));
+#xlabel('indexes  ');
+#ylabel(' DFT')
+#grid on
